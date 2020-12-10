@@ -1,35 +1,37 @@
 specVersion: 0.0.2
-description: USDC
-repository: https://github.com/centrehq/usdc-subgraph
+description: Kp3rV1
+repository: https://github.com/SilasZhr/Kp3rV1-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: FiatTokenV1
+    name: Keep3rV1
     network: mainnet
     source:
-      address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-      abi: FiatTokenV1
-      startBlock: 6082465
+      address: "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44"
+      abi: Keep3rV1
+      startBlock: 11143904 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - User
-        - Minter
+        - Keeper
+        - Job
         - UserCounter
-        - MinterCounter
+        - KeeperCounter
+        - JobCounter
         - TransferCounter
         - TotalSupply
       abis:
-        - name: FiatTokenV1
-          file: ./abis/FiatTokenV1.json
+        - name: Keep3rV1
+          file: ./abis/Keep3rV1.json
       eventHandlers:
-        - event: Burn(indexed address,uint256)
-          handler: handleBurn
-        - event: Mint(indexed address,indexed address,uint256)
-          handler: handleMint
+        - event: KeeperDispute(indexed address,uint256)
+          handler: handleKeeperDispute
+        - event: JobAdded(indexed address,uint256,address)
+          handler: handleJobAdded
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts

@@ -5,22 +5,32 @@ type User @entity {
   transactionCount: Int!
 }
 
-type Minter @entity {
+type Keeper @entity {
   id: ID!
   address: String!
-  totalMinted: BigInt!
-  totalBurned: BigInt!
 }
+
+type Job  @entity {
+  id: ID!
+  address: String!
+}
+
 
 type UserCounter @entity {
   id: ID!
   count: Int!
 }
 
-type MinterCounter @entity {
+type KeeperCounter @entity {
   id: ID!
   count: Int!
 }
+
+type JobCounter @entity {
+  id: ID!
+  count: Int!
+}
+
 
 type TransferCounter @entity {
   id: ID!
