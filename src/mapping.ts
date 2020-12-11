@@ -1,5 +1,5 @@
 
-import {JobAdded, JobRemoved, KeeperBonded, RemoveJob, Transfer} from '../generated/Keep3rV1/Keep3rV1'
+import {JobAdded, JobRemoved, KeeperBonded, RemoveJob, Transfer, TransferCounter} from '../generated/Keep3rV1/Keep3rV1'
 import {Keeper, Job, User } from '../generated/schema'
 import {Address, BigDecimal, BigInt, log} from "@graphprotocol/graph-ts";
 
