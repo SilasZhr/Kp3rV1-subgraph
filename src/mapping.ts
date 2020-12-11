@@ -1,88 +1,11 @@
-import { Mint, Burn, Transfer } from './types/FiatTokenV1/FiatTokenV1'
-import {
-  User,
-  Minter,
-  UserCounter,
-  MinterCounter,
-  TransferCounter,
-  TotalSupply
-} from './types/schema'
-import { BigInt } from '@graphprotocol/graph-ts'
 
-export function handleMint(event: Mint): void {
-  let day = (event.block.timestamp / BigInt.fromI32(60 * 60 * 24))
-  let minter = Minter.load(event.params.minter.toHex())
-  if (minter == null) {
-    // Minter
-    minter = new Minter(event.params.minter.toHex())
-    minter.address = event.params.minter.toHex()
-    minter.totalMinted = BigInt.fromI32(0)
-    minter.totalBurned = BigInt.fromI32(0)
+import {JobAdded, JobRemoved, KeeperBonded, RemoveJob} from '../generated/Keep3rV1/Keep3rV1'
+import Keeper, Job, User, } from '../generated/schema'
+import {Address, BigDecimal, BigInt, log} from "@graphprotocol/graph-ts";
 
-    // MinterCounter
-    let minterCounter = MinterCounter.load('singleton')
-    if (minterCounter == null) {
-      minterCounter = new MinterCounter('singleton')
-      minterCounter.count = 1
-    } else {
-      minterCounter.count = minterCounter.count + 1
-    }
-    minterCounter.save()
-  }
-  minter.totalMinted = minter.totalMinted + event.params.amount
-  minter.save()
 
-  let totalSupply = TotalSupply.load('singleton')
-  if (totalSupply == null) {
-    totalSupply = new TotalSupply('singleton')
-    totalSupply.supply = BigInt.fromI32(0)
-    totalSupply.minted = BigInt.fromI32(0)
-    totalSupply.burned = BigInt.fromI32(0)
-  }
-  totalSupply.supply = totalSupply.supply + event.params.amount
-  totalSupply.minted = totalSupply.minted + event.params.amount
-  totalSupply.save()
-  totalSupply.id = day.toString()
-  totalSupply.save()
-}
 
-export function handleBurn(event: Burn): void {
-  let day = (event.block.timestamp / BigInt.fromI32(60 * 60 * 24))
-  let minter = Minter.load(event.params.burner.toHex())
-  if (minter == null) {
-    minter = new Minter(event.params.burner.toHex())
-    minter.address = event.params.burner.toHex()
-    minter.totalMinted = BigInt.fromI32(0)
-    minter.totalBurned = BigInt.fromI32(0)
 
-    // MinterCounter
-    let minterCounter = MinterCounter.load('singleton')
-    if (minterCounter == null) {
-      minterCounter = new MinterCounter('singleton')
-      minterCounter.count = 1
-    } else {
-      minterCounter.count = minterCounter.count + 1
-    }
-    minterCounter.save()
-    minterCounter.id = day.toString()
-    minterCounter.save()
-  }
-  minter.totalBurned = minter.totalBurned + event.params.amount
-  minter.save()
-
-  let totalSupply = TotalSupply.load('singleton')
-  if (totalSupply == null) {
-    totalSupply = new TotalSupply('singleton')
-    totalSupply.supply = BigInt.fromI32(0)
-    totalSupply.minted = BigInt.fromI32(0)
-    totalSupply.burned = BigInt.fromI32(0)
-  }
-  totalSupply.supply = totalSupply.supply - event.params.amount
-  totalSupply.burned = totalSupply.burned + event.params.amount
-  totalSupply.save()
-  totalSupply.id = day.toString()
-  totalSupply.save()
-}
 
 export function handleTransfer(event: Transfer): void {
   let day = (event.block.timestamp / BigInt.fromI32(60 * 60 * 24))
