@@ -14,7 +14,7 @@ export function handleTransfer(event: Transfer): void {
   if (userFrom == null) {
     userFrom = newUser(event.params.from.toHex(), event.params.from.toHex());
   }
-  userFrom.balance = userFrom.balance - event.params.value
+  userFrom.balance = userFrom.balance - event.params.amount
   userFrom.transactionCount = userFrom.transactionCount + 1
   userFrom.save()
 
@@ -34,7 +34,7 @@ export function handleTransfer(event: Transfer): void {
     userCounter.id = day.toString()
     userCounter.save()
   }
-  userTo.balance = userTo.balance + event.params.value
+  userTo.balance = userTo.balance + event.params.amount
   userTo.transactionCount = userTo.transactionCount + 1
   userTo.save()
 
@@ -46,7 +46,7 @@ export function handleTransfer(event: Transfer): void {
     transferCounter.totalTransferred = BigInt.fromI32(0)
   }
   transferCounter.count = transferCounter.count + 1
-  transferCounter.totalTransferred = transferCounter.totalTransferred + event.params.value
+  transferCounter.totalTransferred = transferCounter.totalTransferred + event.params.amount
   transferCounter.save()
   transferCounter.id = day.toString()
   transferCounter.save()
