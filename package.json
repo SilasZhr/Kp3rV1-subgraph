@@ -1,0 +1,17 @@
+{
+  "name": "kp3r",
+  "version": "0.1.0",
+  "scripts": {
+    "codegen": "graph codegen --debug --output-dir src/types/",
+    "build": "graph build --debug",
+    "deploy-local": "graph deploy  --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.18.0",
+    "@graphprotocol/graph-ts": "^0.18.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0"
+  }
+}
